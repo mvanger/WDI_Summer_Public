@@ -8,6 +8,18 @@ require 'pry'
 # for colors in our terminal
 require 'rainbow'
 
+# helpers do
+#   def open_db
+#     PG.connect(:dbname => 'address_book', :host => 'localhost')
+#   end
+# end
+
+def run_sql(sql)
+  db = PG.connect(:dbname => 'address_book', :host => 'localhost')
+  result = db.exec(sql)
+  db.close
+  result
+end
 
 get '/' do
   # this prints to sinatra's server logs in terminal
@@ -37,17 +49,50 @@ post '/contacts' do
   redirect to '/contacts'
 end
 
+get '/contacts/:id/edit' do
+  id = params[:id]
+  db = PG.connect(:dbname => 'address_book', :host => 'localhost')
+  sql = "SELECT * FROM contacts WHERE id = #{id}"
+  @contact = db.exec(sql).first
+  db.close
+  erb :edit
+end
+
 # Make a new contact
 get '/contacts/new' do
   erb :form
 end
 
-# show one specific contact
-get '/contacts/:name' do
-  @user_name = params[:name]
+post '/contacts/:id/delete' do
+  id = params[:id]
   db = PG.connect(:dbname => 'address_book', :host => 'localhost')
-  sql = "SELECT * FROM contacts WHERE first = '#{@user_name}'"
+  sql = "DELETE FROM contacts WHERE id = #{id}"
+  db.exec(sql)
+  db.close
+  redirect to '/contacts'
+end
+
+# show one specific contact
+get '/contacts/:id' do
+  id = params[:id]
+  db = PG.connect(:dbname => 'address_book', :host => 'localhost')
+  sql = "SELECT * FROM contacts WHERE id = #{id}"
   @contact = db.exec(sql).first
   db.close
   erb :contact
 end
+
+post '/contacts/:id' do
+  id = params[:id]
+  first = params[:first]
+  last = params[:last]
+  age = params[:age]
+  db = PG.connect(:dbname => 'address_book', :host => 'localhost')
+  sql = "UPDATE contacts SET (first, last, age) = ('#{first}', '#{last}', #{age}) WHERE id = #{id}"
+  db.exec(sql).first
+  db.close
+  redirect to '/contacts'
+end
+
+
+
