@@ -20,6 +20,10 @@ def run_sql(sql)
   db.close
   result
 end
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/master
 
 get '/' do
   # this prints to sinatra's server logs in terminal
@@ -29,10 +33,10 @@ end
 
 # shows all contacts
 get '/contacts' do
-  puts "we're connecting to the database".color(:blue)
   db = PG.connect(:dbname => 'address_book', :host => 'localhost')
+  puts "we're connecting to the database".color(:blue)
   sql = "SELECT * FROM contacts"
-  @contacts = db.exec("SELECT * FROM contacts")
+  @contacts = db.exec(sql)
   db.close
   puts "database is closed".color(:magenta)
   erb :contacts
@@ -49,6 +53,18 @@ post '/contacts' do
   redirect to '/contacts'
 end
 
+<<<<<<< HEAD
+=======
+post '/contacts/delete' do
+  id = params[:id]
+  db = PG.connect(:dbname => 'address_book', :host => 'localhost')
+  sql = "DELETE FROM contacts WHERE id = #{id}"
+  db.exec(sql)
+  db.close
+  redirect to "/contacts"
+end
+
+>>>>>>> upstream/master
 get '/contacts/:id/edit' do
   id = params[:id]
   db = PG.connect(:dbname => 'address_book', :host => 'localhost')
@@ -88,6 +104,7 @@ post '/contacts/:id' do
   last = params[:last]
   age = params[:age]
   db = PG.connect(:dbname => 'address_book', :host => 'localhost')
+<<<<<<< HEAD
   sql = "UPDATE contacts SET (first, last, age) = ('#{first}', '#{last}', #{age}) WHERE id = #{id}"
   db.exec(sql).first
   db.close
@@ -96,3 +113,10 @@ end
 
 
 
+=======
+  sql = "UPDATE contacts SET (first, last, age) = ('#{first}', '#{last}',#{age}) WHERE id = #{id}"
+  db.exec(sql)
+  db.close
+  redirect to '/contacts'
+end
+>>>>>>> upstream/master
