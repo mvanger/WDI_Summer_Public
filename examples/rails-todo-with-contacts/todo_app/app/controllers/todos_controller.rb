@@ -1,8 +1,15 @@
 class TodosController < ApplicationController
 
+<<<<<<< HEAD
   # GET
   # /todos/search
   # todos_search paths
+=======
+
+  # GET
+  # /todos/search
+  # todos_search path
+>>>>>>> cf2d9404a05157db7ccd38ede1e79c67067ba956
   def search
     @todos = Todo.where(task: params[:task])
     render "index"
@@ -13,6 +20,7 @@ class TodosController < ApplicationController
   # add_todo_contact_path for linking
   def add_contact
     todo = Todo.find(params[:id])
+<<<<<<< HEAD
     contact = Contact.find(params[:contact_id])
     todo.contacts << contact
     redirect_to todo
@@ -22,6 +30,24 @@ class TodosController < ApplicationController
     todo = Todo.find(params[:id])
     contact = Contact.find(params[:contact_id])
     todo.contacts.delete(contact)
+=======
+    # SELECT * FROM TODOS WHERE id = params[:id]
+
+    contact = Contact.find(params[:contact_id])
+    # SELECT * FROM CONTACTS WHERE id = params[:contact_id]
+    todo.contacts << contact
+
+    redirect_to todo
+  end
+
+  # POST
+  # /todos/:id/remove_contact
+  # remove_todo_contact_path for linking
+  def remove_contact
+    contact = Contact.find params[:contact_id]
+    todo = Todo.find params[:id]
+    todo.contacts.destroy(contact)
+>>>>>>> cf2d9404a05157db7ccd38ede1e79c67067ba956
     redirect_to todo
   end
 

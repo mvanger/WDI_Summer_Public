@@ -4,12 +4,33 @@
 <p>Due Date: <%= @todo.due_date %></p>
 <p>Completed: <%= @todo.completed %></p>
 
+<<<<<<< HEAD
 <h3>Contacts:</h3>
   <% @todo.contacts.each do |contact| %>
     <%= render partial: contact %>
     <%= button_to "Remove Contact",
     remove_todo_contact_path(contact_id: contact.id) %>
   <% end %>
+=======
+<h3>Contacts assigned to this task:</h3>
+  <% @todo.contacts.each do |contact| %>
+  <p>
+    <%= render partial: contact %>
+    <%= button_to "Remove Contact",
+      remove_todo_contact_path(contact_id: contact.id) %>
+  </p>
+  <% end %>
+
+<h3>Not on this task:</h3>
+  <% @available_contacts.each do |contact| %>
+  <p>
+    <%= render partial: contact %>
+    <%= button_to "Assign Contact",
+      add_todo_contact_path(contact_id: contact.id) %>
+  </p>
+  <% end %>
+
+>>>>>>> cf2d9404a05157db7ccd38ede1e79c67067ba956
 
 <h3>Not on this task: </h3>
   <% @available_contacts.each do |contact| %>
