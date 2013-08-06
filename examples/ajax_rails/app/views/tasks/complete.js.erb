@@ -3,5 +3,7 @@
 // it's going to move the completed task to the completed list and hide the complete button
 
 // STEP 28: Use the HTML `data-id` attribute to find the task in the DOM
-
 // STEP 29: Move the task to the `completed-items` list
+$('#<%= @task.id %>').appendTo($('#completed-items'))
+$('#<%= @task.id %> .complete').hide()
+$('#<%= @task.id %> .uncomplete').show()

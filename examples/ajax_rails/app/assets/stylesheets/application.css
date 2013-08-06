@@ -88,6 +88,10 @@ button{
 	background:#80ff80;
 }
 
+.uncomplete:hover{
+	background: #70ff70;
+}
+
 #add-item:hover{
 	background:#4040ff;
 }

@@ -2,8 +2,9 @@
 	<div class="items">
 		<%=task.name %>
 		<div class="actions">
-			<%=button_to "complete", complete_task_url(task), remote: true%>
-			<%=button_to "delete", task_url(task), :method => :delete, remote: true%>
+      <%=button_to "complete", complete_task_url(task), remote: true%>
+      <%=button_to "uncomplete", uncomplete_task_url(task), remote: true%>
+      <%=button_to "delete", task_url(task), :method => :delete, remote: true%>
 		</div>
 	</div>
 </li>
